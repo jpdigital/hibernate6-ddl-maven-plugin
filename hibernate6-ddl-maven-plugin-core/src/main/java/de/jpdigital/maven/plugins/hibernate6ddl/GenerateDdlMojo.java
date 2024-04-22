@@ -41,10 +41,12 @@ import org.apache.maven.project.MavenProject;
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
-@Mojo(name = "gen-ddl",
-      defaultPhase = LifecyclePhase.PROCESS_CLASSES,
-      requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME,
-      threadSafe = true)
+@Mojo(
+    name = "gen-ddl",
+    defaultPhase = LifecyclePhase.PROCESS_CLASSES,
+    requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME,
+    threadSafe = true
+)
 @SuppressWarnings({"PMD.LongVariable", "PMD.DataClass"})
 public class GenerateDdlMojo extends AbstractMojo {
 
@@ -52,15 +54,18 @@ public class GenerateDdlMojo extends AbstractMojo {
         "format_sql",
         "use_sql_comments",
         "hibernate.id.new_generator_mappings",
-        "org.hibernate.envers.audit_strategy",};
+        "org.hibernate.envers.audit_strategy"
+    };
 
     /**
      * Location of the output file.
      */
-    @Parameter(defaultValue
+    @Parameter(
+        defaultValue
         = "${project.build.directory}/generated-resources/sql/ddl/auto",
-               property = "outputDir",
-               required = true)
+        property = "outputDir",
+        required = true
+    )
     private File outputDirectory;
 
     /**
@@ -185,7 +190,10 @@ public class GenerateDdlMojo extends AbstractMojo {
             annotatedPackages = new HashSet<>();
             for (final String packageName : packages) {
                 final EntityFinder entityFinder = EntityFinder.forPackage(
-                    project, getLog(), packageName, includeTestClasses
+                    project,
+                    getLog(),
+                    packageName,
+                    includeTestClasses
                 );
                 final Set<Class<?>> packageEntities = entityFinder
                     .findEntities();
@@ -197,9 +205,7 @@ public class GenerateDdlMojo extends AbstractMojo {
         }
 
         getLog().info(
-            String.format(
-                "Found %d entities.", entityClasses.size()
-            )
+            String.format("Found %d entities.", entityClasses.size())
         );
         if (annotatedPackages != null && !annotatedPackages.isEmpty()) {
             getLog().info(
@@ -228,8 +234,9 @@ public class GenerateDdlMojo extends AbstractMojo {
         }
 
         // Find the DDL generator implementation to use.
-        final ServiceLoader<DdlGenerator> serviceLoader = ServiceLoader
-            .load(DdlGenerator.class);
+        final ServiceLoader<DdlGenerator> serviceLoader = ServiceLoader.load(
+            DdlGenerator.class
+        );
         final DdlGenerator ddlGenerator;
         if (serviceLoader.iterator().hasNext()) {
             ddlGenerator = serviceLoader.iterator().next();
@@ -244,14 +251,20 @@ public class GenerateDdlMojo extends AbstractMojo {
 
         for (final Dialect dialect : convertDialects()) {
             ddlGenerator.generateDdl(
-                dialect, annotatedPackages, entityClasses, this
+                dialect,
+                annotatedPackages,
+                entityClasses,
+                this
             );
         }
 
         if (customDialects != null) {
             for (final String customDialect : customDialects) {
                 ddlGenerator.generateDdl(
-                    customDialect, annotatedPackages, entityClasses, this
+                    customDialect,
+                    annotatedPackages,
+                    entityClasses,
+                    this
                 );
             }
         }
@@ -312,8 +325,10 @@ public class GenerateDdlMojo extends AbstractMojo {
     }
 
     public void setCustomDialects(final String... customDialects) {
-        this.customDialects = Arrays.copyOf(customDialects,
-                                            customDialects.length);
+        this.customDialects = Arrays.copyOf(
+            customDialects,
+            customDialects.length
+        );
     }
 
     public boolean isCreateDropStatements() {
@@ -337,23 +352,28 @@ public class GenerateDdlMojo extends AbstractMojo {
         if (persistencePropertiesToUse == null
                 || persistencePropertiesToUse.length == 0) {
 
-            return Arrays.copyOf(DEFAULT_PROPERTIES_TO_USE,
-                                 DEFAULT_PROPERTIES_TO_USE.length);
+            return Arrays.copyOf(
+                DEFAULT_PROPERTIES_TO_USE,
+                DEFAULT_PROPERTIES_TO_USE.length
+            );
         } else {
-            return Arrays.copyOf(persistencePropertiesToUse,
-                                 persistencePropertiesToUse.length);
+            return Arrays.copyOf(
+                persistencePropertiesToUse,
+                persistencePropertiesToUse.length
+            );
         }
     }
 
     public void setPersistencePropertiesToUse(
-        final String... persistencePropertiesToUse) {
-
+        final String... persistencePropertiesToUse
+    ) {
         if (persistencePropertiesToUse == null) {
             this.persistencePropertiesToUse = null;
         } else {
-            this.persistencePropertiesToUse = Arrays
-                .copyOf(persistencePropertiesToUse,
-                        persistencePropertiesToUse.length);
+            this.persistencePropertiesToUse = Arrays.copyOf(
+                persistencePropertiesToUse,
+                persistencePropertiesToUse.length
+            );
         }
     }
 
@@ -392,7 +412,6 @@ public class GenerateDdlMojo extends AbstractMojo {
      * @throws MojoFailureException If an error occurs.
      */
     private Set<Dialect> convertDialects() throws MojoFailureException {
-
         final Set<Dialect> dialectsList = new HashSet<>();
         if (dialects != null) {
             for (final String dialect : dialects) {
@@ -419,10 +438,10 @@ public class GenerateDdlMojo extends AbstractMojo {
         final Set<Dialect> dialectsList
     )
         throws MojoFailureException {
-
         try {
-            dialectsList.add(Dialect
-                .valueOf(dialect.toUpperCase(Locale.ENGLISH)));
+            dialectsList.add(
+                Dialect.valueOf(dialect.toUpperCase(Locale.ENGLISH))
+            );
         } catch (IllegalArgumentException ex) {
             final StringBuffer buffer = new StringBuffer();
             for (final Dialect avilable : Dialect.values()) {
@@ -431,43 +450,46 @@ public class GenerateDdlMojo extends AbstractMojo {
 
             throw new MojoFailureException(
                 String.format(
-                    "Can't convert the configured dialect '%s' to a dialect classname. "
-                    + "Available dialects are:%n"
+                    "Can't convert the configured dialect '%s' to a dialect "
+                        + "classname. Available dialects are:%n"
                         + "%s",
                     dialect,
                     buffer.toString()),
-                ex);
+                ex
+            );
         }
     }
 
     protected void writeOutputFile(
         final String dialectClassName,
         final Path tmpDir
-    )
-        throws MojoFailureException {
-
-        final OutputFileWriter writer = new OutputFileWriter(outputDirectory);
-        writer.setOmitDialectFromFileName(omitDialectFromFileName
-                                              && dialects.length == 1);
-        writer.setOutputFileNamePrefix(outputFileNamePrefix);
-        writer.setOutputFileNameSuffix(outputFileNameSuffix);
+    ) throws MojoFailureException {
+        final OutputFileWriter writer = OutputFileWriterBuilder
+            .withOutputDirectory(outputDirectory)
+            .omitDialectFromFileFile(
+                omitDialectFromFileName
+                    && dialects.length == 1
+            )
+            .withFileNamePrefix(outputFileNamePrefix)
+            .withFileNameSuffix(outputFileNameSuffix)
+            .build();
 
         writer.writeOutputFile(dialectClassName, tmpDir);
 
     }
 
     public String getDialectNameFromClassName(final String dialectClassName) {
-
         final int pos = dialectClassName.lastIndexOf('.');
 
         if (dialectClassName.toLowerCase(Locale.ROOT).endsWith("dialect")) {
             return dialectClassName
-                .substring(pos + 1,
-                           dialectClassName.length() - "dialect".length())
+                .substring(
+                    pos + 1,
+                    dialectClassName.length() - "dialect".length()
+                )
                 .toLowerCase(Locale.ROOT);
         } else {
-            return dialectClassName.substring(pos + 1)
-                .toLowerCase(Locale.ROOT);
+            return dialectClassName.substring(pos + 1).toLowerCase(Locale.ROOT);
         }
     }
 

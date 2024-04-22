@@ -39,7 +39,7 @@
         </repository>
     </distributionManagement>
 
-    <inceptionYear>2016</inceptionYear>
+    <inceptionYear>2024</inceptionYear>
     
     <licenses>
         <license>
@@ -49,7 +49,7 @@
     </licenses>
 
     <description>
-        This plugin for Maven wraps the SchemaExport class from Hibernate 5 into a Mojo which
+        This plugin for Maven wraps the SchemaExport class from Hibernate 6 into a Mojo which
         can easily configured from a projects pom.xml
     </description>
 

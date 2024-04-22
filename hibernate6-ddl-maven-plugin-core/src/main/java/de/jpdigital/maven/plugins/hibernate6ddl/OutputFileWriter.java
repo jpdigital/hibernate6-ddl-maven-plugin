@@ -16,7 +16,6 @@
  */
 package de.jpdigital.maven.plugins.hibernate6ddl;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -29,62 +28,19 @@ import org.apache.maven.plugin.MojoFailureException;
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
-@SuppressWarnings({"PMD.LongVariable", "PMD.DataClass"})
 public class OutputFileWriter {
 
-    private File outputDirectory;
+    private final OutputFileWriterParameters parameters;
 
-    private String outputFileNamePrefix;
-
-    private String outputFileNameSuffix;
-
-    private boolean omitDialectFromFileName;
-
-    public OutputFileWriter() {
+    OutputFileWriter(final OutputFileWriterParameters parameters) {
         super();
+        this.parameters = parameters;
     }
 
-    public OutputFileWriter(final File outputDirectory) {
-        super();
-        this.outputDirectory = outputDirectory;
-    }
-
-    public File getOutputDirectory() {
-        return outputDirectory;
-    }
-
-    public void setOutputDirectory(final File outputDirectory) {
-        this.outputDirectory = outputDirectory;
-    }
-
-    public String getOutputFileNamePrefix() {
-        return outputFileNamePrefix;
-    }
-
-    public void setOutputFileNamePrefix(final String outputFileNamePrefix) {
-        this.outputFileNamePrefix = outputFileNamePrefix;
-    }
-
-    public String getOutputFileNameSuffix() {
-        return outputFileNameSuffix;
-    }
-
-    public void setOutputFileNameSuffix(final String outputFileNameSuffix) {
-        this.outputFileNameSuffix = outputFileNameSuffix;
-    }
-
-    public boolean isOmitDialectFromFileName() {
-        return omitDialectFromFileName;
-    }
-
-    public void setOmitDialectFromFileName(final boolean omitDialectFromFileName) {
-        this.omitDialectFromFileName = omitDialectFromFileName;
-    }
-
-    protected void writeOutputFile(final String dialectClassName,
-                                   final Path tmpDir)
-        throws MojoFailureException {
-
+    protected void writeOutputFile(
+        final String dialectClassName,
+        final Path tmpDir
+    ) throws MojoFailureException {
         createOutputDir();
 
         final Path outputFilePath = createOutputFilePath(dialectClassName);
@@ -143,13 +99,14 @@ public class OutputFileWriter {
      *                              fails.
      */
     private void createOutputDir() throws MojoFailureException {
-        final Path outputDir = outputDirectory.toPath();
+        final Path outputDir = parameters.getOutputDirectory().toPath();
         if (Files.exists(outputDir)) {
             if (!Files.isDirectory(outputDir)) {
-                throw new MojoFailureException("A file with the name of the "
-                                                   + "output directory already "
-                                                   + "exists but is not a "
-                                                   + "directory.");
+                throw new MojoFailureException(
+                    "A file with the name of the "
+                        + "output directory already "
+                        + "exists but is not a "
+                        + "directory.");
             }
         } else {
             try {
@@ -171,33 +128,35 @@ public class OutputFileWriter {
      * @return The {@link Path} for the output file.
      */
     private Path createOutputFilePath(final String dialectClassName) {
-
         final String dirPath;
-        if (outputDirectory.getAbsolutePath().endsWith("/")) {
-            dirPath = outputDirectory
+        if (parameters.getOutputDirectory().getAbsolutePath().endsWith("/")) {
+            dirPath = parameters
+                .getOutputDirectory()
                 .getAbsolutePath()
-                .substring(0, outputDirectory.getAbsolutePath().length());
+                .substring(
+                    0,
+                    parameters.getOutputDirectory().getAbsolutePath().length()
+                );
         } else {
-            dirPath = outputDirectory.getAbsolutePath();
+            dirPath = parameters.getOutputDirectory().getAbsolutePath();
         }
 
         final StringBuffer fileNameBuffer = new StringBuffer();
 
-        fileNameBuffer.append(outputFileNamePrefix);
+        fileNameBuffer.append(parameters.getOutputFileNamePrefix());
 
-        if (!omitDialectFromFileName
+        if (!parameters.isOmitDialectFromFileName()
                 || isFileNamePrefixEmpty() && isFileNameSuffixEmpty()) {
             fileNameBuffer.append(getDialectNameFromClassName(dialectClassName));
         }
 
-        fileNameBuffer.append(outputFileNameSuffix);
+        fileNameBuffer.append(parameters.getOutputFileNameSuffix());
 
         return Paths.get(String.format(
             "%s/%s.sql", dirPath, fileNameBuffer.toString()));
     }
 
     private String getDialectNameFromClassName(final String dialectClassName) {
-
         final int pos = dialectClassName.lastIndexOf('.');
 
         if (dialectClassName.toLowerCase(Locale.ROOT).endsWith("dialect")) {
@@ -212,18 +171,15 @@ public class OutputFileWriter {
     }
 
     private boolean isFileNamePrefixEmpty() {
-        return outputFileNamePrefix == null
-                   || isBlank(outputFileNamePrefix);
+        return isBlank(parameters.getOutputFileNamePrefix());
     }
 
     private boolean isFileNameSuffixEmpty() {
-        return outputFileNameSuffix == null
-                   || isBlank(outputFileNameSuffix);
+        return isBlank(parameters.getOutputFileNameSuffix());
     }
 
     private boolean isBlank(final String str) {
-
-        if (str.isEmpty()) {
+        if (str == null || str.isEmpty()) {
             return true;
         }
 
