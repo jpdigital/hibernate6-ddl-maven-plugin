@@ -47,7 +47,6 @@ import org.apache.maven.project.MavenProject;
     requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME,
     threadSafe = true
 )
-@SuppressWarnings({"PMD.LongVariable", "PMD.DataClass"})
 public class GenerateDdlMojo extends AbstractMojo {
 
     private final static String[] DEFAULT_PROPERTIES_TO_USE = new String[]{
@@ -156,7 +155,6 @@ public class GenerateDdlMojo extends AbstractMojo {
      *                                executed.
      */
     @Override
-    @SuppressWarnings({"PMD.CyclomaticComplexity"})
     public void execute() throws MojoExecutionException, MojoFailureException {
         final File outputDir = outputDirectory;
 
