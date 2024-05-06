@@ -18,7 +18,7 @@ package de.jpdigital.maven.plugins.hibernate5ddl.tests.ddlit.entities1;
 
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.Embeddable;
+import jakarta.persistence.Embeddable;
 
 /**
  *
