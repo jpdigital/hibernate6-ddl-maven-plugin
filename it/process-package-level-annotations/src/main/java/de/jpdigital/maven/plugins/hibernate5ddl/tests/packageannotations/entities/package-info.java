@@ -1,16 +1,9 @@
-@TypeDefs(
-    {
-        @TypeDef(
-            name = "bitset",
-            defaultForType = BitSet.class,
-            typeClass = BitSetType.class
-        )
-    }
+@JavaTypeRegistration(
+    javaType = BitSet.class,
+    descriptorClass = BitSetJavaType.class
 )
 package de.jpdigital.maven.plugins.hibernate5ddl.tests.packageannotations.entities;
 
-import de.jpdigital.maven.plugins.hibernate5ddl.tests.packageannotations.types.BitSetType;
-import org.hibernate.annotations.TypeDef;
-import org.hibernate.annotations.TypeDefs;
-
+import de.jpdigital.maven.plugins.hibernate5ddl.tests.packageannotations.types.BitSetJavaType;
 import java.util.BitSet;
+import org.hibernate.annotations.JavaTypeRegistration;

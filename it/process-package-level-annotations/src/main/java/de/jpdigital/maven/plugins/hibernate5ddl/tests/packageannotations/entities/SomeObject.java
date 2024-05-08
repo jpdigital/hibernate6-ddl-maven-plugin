@@ -16,11 +16,8 @@
  */
 package de.jpdigital.maven.plugins.hibernate5ddl.tests.packageannotations.entities;
 
-import de.jpdigital.maven.plugins.hibernate5ddl.tests.packageannotations.types.BitSetType;
-import org.hibernate.annotations.Type;
 
 import java.io.Serializable;
-import java.util.BitSet;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,8 +37,6 @@ public class SomeObject implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long objectId;
 
-    @Type(type
-        = "de.jpdigital.maven.plugins.hibernate5ddl.tests.packageannotations.types.BitSetType")
     private BitSet bitSet;
 
     public long getObjectId() {
