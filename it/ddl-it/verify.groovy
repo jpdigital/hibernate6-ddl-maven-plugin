@@ -2,7 +2,7 @@ import java.nio.file.Files
 import java.nio.file.Paths
 import java.nio.charset.StandardCharsets
 
-def dialects = ["hsql", "mysql5", "postgresql9"]
+def dialects = ["hsql", "mariadb", "postgresql"]
 
 for (def dialect : dialects) {
     def file = new File(

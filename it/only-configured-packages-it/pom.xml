@@ -42,8 +42,8 @@
                 <configuration>
                     <dialects>
                         <param>hsql</param>
-                        <param>mariadb106</param>
-                        <param>POSTGRESQL10</param>
+                        <param>mariadb</param>
+                        <param>POSTGRESQL</param>
                     </dialects>
                     <packages>
                         <param>de.jpdigital.maven.plugins.hibernate5ddl.tests.onlyconfiguredpackages.entities1</param>

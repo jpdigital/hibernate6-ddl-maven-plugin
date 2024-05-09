@@ -43,8 +43,8 @@
                 <configuration>
                     <dialects>
                         <param>hsql</param>
-                        <param>mariadb106</param>
-                        <param>POSTGRESQL10</param>
+                        <param>mariadb</param>
+                        <param>POSTGRESQL</param>
                     </dialects>
                     <includeTestClasses>true</includeTestClasses>
                     <persistenceProperties>
