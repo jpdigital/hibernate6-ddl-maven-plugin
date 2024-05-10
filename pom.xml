@@ -98,6 +98,11 @@
             </dependency>
             <dependency>
                 <groupId>org.apache.maven</groupId>
+                <artifactId>maven-model</artifactId>
+                <version>3.9.6</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven</groupId>
                 <artifactId>maven-plugin-api</artifactId>
                 <version>3.9.6</version>
             </dependency>
@@ -180,7 +185,6 @@
                     <configuration>
                         <source>11</source>
                         <target>11</target>
-                        <optimize>true</optimize>
                         <debug>true</debug>
                         <encoding>${project.build.sourceEncoding}</encoding>
                     </configuration>
@@ -545,7 +549,6 @@
                         <configuration>
                             <source>11</source>
                             <target>11</target>
-                            <optimize>true</optimize>
                             <debug>true</debug>
                             <encoding>${project.build.sourceEncoding}</encoding>
                         </configuration>
@@ -681,7 +684,6 @@
                         <configuration>
                             <source>11</source>
                             <target>11</target>
-                            <optimize>true</optimize>
                             <debug>true</debug>
                             <encoding>${project.build.sourceEncoding}</encoding>
                         </configuration>
