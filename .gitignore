@@ -28,3 +28,4 @@ replay_pid*
 /hibernate6-ddl-maven-plugin-core/target/
 /hibernate62-ddl-maven-plugin/target/
 /hibernate64-ddl-maven-plugin/target/
+/hibernate65-ddl-maven-plugin/target/
