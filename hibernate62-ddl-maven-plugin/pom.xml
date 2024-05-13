@@ -13,7 +13,7 @@
     <name>Maven DDL generator plugin for Hibernate 6.2</name>
     <packaging>maven-plugin</packaging>
 
-    <url>https://github.com/jpdigital/hibernate7-ddl-maven-plugin</url>
+    <url>https://github.com/jpdigital/hibernate6-ddl-maven-plugin</url>
     
     <issueManagement>
         <system>GitHub</system>
