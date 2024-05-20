@@ -102,7 +102,7 @@
         <dependency>
             <groupId>org.hibernate.tool</groupId>
             <artifactId>hibernate-tools-orm</artifactId>
-            <version>6.4.5.Final</version>
+            <version>6.4.8.Final</version>
         </dependency>
         
         <dependency>
@@ -368,7 +368,7 @@
                             <ignoreVersion>
                                 <!-- can be either: 'exact' (default) or 'regex' -->
                                 <type>regex</type>
-                                <version>(.+-SNAPSHOT|.+-M\d)</version>
+                                <version>(.+-SNAPSHOT|.+-M\d*|.+-B\d*)</version>
                             </ignoreVersion>
                             <ignoreVersion>
                                 <type>regex</type>
@@ -385,22 +385,32 @@
                         </ignoreVersions>
                         <rules>
                             <rule>
-                                <groupId>org.hibernate</groupId>
+                                <groupId>org.hibernate.orm</groupId>
                                 <artifactId>hibernate-core</artifactId>
                                 <ignoreVersions>
                                     <ignoreVersion>
                                         <type>regex</type>
-                                        <version>(6|7).*</version>
+                                        <version>6\.(5)\..*</version>
                                     </ignoreVersion>
                                 </ignoreVersions>
                             </rule>
                             <rule>
-                                <groupId>org.hibernate</groupId>
+                                <groupId>org.hibernate.orm</groupId>
                                 <artifactId>hibernate-envers</artifactId>
                                 <ignoreVersions>
                                     <ignoreVersion>
                                         <type>regex</type>
-                                        <version>(6|7).*</version>
+                                        <version>6\.(5)\..*</version>
+                                    </ignoreVersion>
+                                </ignoreVersions>
+                            </rule>
+                            <rule>
+                                <groupId>org.hibernate.tool</groupId>
+                                <artifactId>hibernate-tools-orm</artifactId>
+                                <ignoreVersions>
+                                    <ignoreVersion>
+                                        <type>regex</type>
+                                        <version>6\.(5)\..*</version>
                                     </ignoreVersion>
                                 </ignoreVersions>
                             </rule>

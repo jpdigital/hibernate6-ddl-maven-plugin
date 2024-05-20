@@ -92,22 +92,22 @@
         <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>6.2.24.Final</version>
+            <version>6.2.25.Final</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-envers</artifactId>
-            <version>6.2.24.Final</version>
+            <version>6.2.25.Final</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate.tool</groupId>
             <artifactId>hibernate-tools-orm</artifactId>
-            <version>6.2.24.Final</version>
+            <version>6.2.25.Final</version>
         </dependency>
 <!--        <dependency>
             <groupId>org.hibernate.tool</groupId>
             <artifactId>hibernate-tools-ant</artifactId>
-            <version>6.2.24.Final</version>
+            <version>6.2.25.Final</version>
         </dependency>-->
         
         <dependency>
@@ -141,7 +141,7 @@
                     <goals>clean package</goals>
                     <postBuildHookScript>verify</postBuildHookScript>
                     <filterProperties>
-                        <hibernateVersion>6.2.24.Final</hibernateVersion>
+                        <hibernateVersion>6.2.25.Final</hibernateVersion>
                         <ddlPluginArtifactId>hibernate62-ddl-maven-plugin</ddlPluginArtifactId>
                         <ddlPluginVersion>${project.version}</ddlPluginVersion>
                     </filterProperties>
@@ -373,7 +373,7 @@
                             <ignoreVersion>
                                 <!-- can be either: 'exact' (default) or 'regex' -->
                                 <type>regex</type>
-                                <version>(.+-SNAPSHOT|.+-M\d)</version>
+                                <version>(.+-SNAPSHOT|.+-M\d*|.+-B\d*)</version>
                             </ignoreVersion>
                             <ignoreVersion>
                                 <type>regex</type>
@@ -390,22 +390,32 @@
                         </ignoreVersions>
                         <rules>
                             <rule>
-                                <groupId>org.hibernate</groupId>
+                                <groupId>org.hibernate.orm</groupId>
                                 <artifactId>hibernate-core</artifactId>
                                 <ignoreVersions>
                                     <ignoreVersion>
                                         <type>regex</type>
-                                        <version>(6|7).*</version>
+                                        <version>6\.(3|4|5)\..*</version>
                                     </ignoreVersion>
                                 </ignoreVersions>
                             </rule>
                             <rule>
-                                <groupId>org.hibernate</groupId>
+                                <groupId>org.hibernate.orm</groupId>
                                 <artifactId>hibernate-envers</artifactId>
                                 <ignoreVersions>
                                     <ignoreVersion>
                                         <type>regex</type>
-                                        <version>(6|7).*</version>
+                                        <version>6\.(3|4|5)\..*</version>
+                                    </ignoreVersion>
+                                </ignoreVersions>
+                            </rule>
+                            <rule>
+                                <groupId>org.hibernate.tool</groupId>
+                                <artifactId>hibernate-tools-orm</artifactId>
+                                <ignoreVersions>
+                                    <ignoreVersion>
+                                        <type>regex</type>
+                                        <version>6\.(3|4|5)\..*</version>
                                     </ignoreVersion>
                                 </ignoreVersions>
                             </rule>
