@@ -5,7 +5,7 @@
 
     <groupId>de.jpdigital</groupId>
     <artifactId>hibernate6-ddl-maven-plugin</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Maven DDL generator plugin for Hibernate 6</name>
